@@ -2,6 +2,6 @@
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
-$entityManager = require 'init_doctrine_em.php';
+$entityManager = \App\Config\DoctrineEntityManagerFactory::create();
 
 return ConsoleRunner::createHelperSet($entityManager);

@@ -18,7 +18,8 @@
         "slim/views": "0.*",
         "twig/twig": "1.*",
         "doctrine/orm": "^2.7",
-        "akrabat/rka-slim-controller": "^2.0"
+        "akrabat/rka-slim-controller": "^2.0",
+        "bryanjhv/slim-session": "~2.2"
     },
     "autoload": {
         "psr-4": {

@@ -1,0 +1,26 @@
+{% extends '/admin/base.html.twig' %}
+{% block head %}
+    <link rel="stylesheet" href="/css/admin/login.css">
+{% endblock %}
+{% block main %}
+<div class="form-login">
+    {% if requestNotValid is defined and requestNotValid == true %}
+        <p class="error">Both username and password fields are required</p>
+    {% endif %}
+    {% if authError is defined and authError == true %}
+        <p class="error">The credentials supplied are not valid</p>
+    {% endif %}
+    <form action="{{ urlFor('login') }}" method="post">
+
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

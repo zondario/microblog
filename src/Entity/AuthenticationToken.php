@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\App\Repository\AuthenticationTokenRepository")
  * @ORM\Table(name="auth_token")
  */
 class AuthenticationToken
@@ -28,9 +28,30 @@ class AuthenticationToken
     protected $token;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * @ORM\Column(name="expires", type="datetime")
+     */
+    protected $expires;
+
+    /**
+     * @return mixed
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * @param mixed $expires
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
+    }
 
     /**
      * @return mixed

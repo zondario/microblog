@@ -15,7 +15,7 @@ class Index extends BaseController
 
     public function execute()
     {
-        $this->app->render('index.twig.html', []);
+        $this->app->render('index.html.twig', []);
     }
 
 }
