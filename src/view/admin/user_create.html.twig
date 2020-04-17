@@ -1,0 +1,32 @@
+{% extends '/admin/base.html.twig' %}
+{% block head %}
+    <link rel="stylesheet" href="/css/admin/login.css">
+{% endblock %}
+{% block main %}
+    {% if error is defined and error == true %}
+        <p class="error">{{ errorMessage }}</p>
+    {% endif %}
+    {% if (error is not defined or error == false) and user is defined and user is not null %}
+        <p class="error">User <strong>{{ user.FirstName }} : {{ user.userName }}</strong> created</p>
+    {% endif %}
+    <div class="form-login">
+        <form action="{{ urlFor('users_create_post') }}" method="post">
+
+            <div class="container">
+                <label for="first_name"><b>First Name</b></label>
+                <input type="text" placeholder="Enter First name" name="first_name" required>
+
+                <label for="last_name"><b>Last Name</b></label>
+                <input type="text" placeholder="Enter Last name" name="last_name" required>
+
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

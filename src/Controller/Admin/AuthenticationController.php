@@ -16,7 +16,11 @@ use Doctrine\ORM\EntityManager;
 
 class AuthenticationController extends BaseController
 {
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
+
     /**
      * @var AuthenticationManagerInterface
      */
@@ -27,6 +31,7 @@ class AuthenticationController extends BaseController
         $this->entityManager = $entityManager;
         $this->authenticationManager = $authenticationManager;
     }
+
     public function login()
     {
         if ($this->authenticationManager->isLoggedIn()) {
@@ -34,8 +39,16 @@ class AuthenticationController extends BaseController
         }
         $this->app->render('admin/login.html.twig', []);
     }
+
+    public function logout()
+    {
+        $this->authenticationManager->logOut();
+        $this->app->redirectTo('home');
+    }
+
     public function loginPost()
     {
+
         if (!Login::isValid($this->request)) {
             $this->app->render('admin/login.html.twig', ['requestNotValid' => true]);
         }
@@ -46,11 +59,14 @@ class AuthenticationController extends BaseController
                 $this->request->post('username'),
                 $this->request->post('password')
             );
+
         } catch (AlreadyLoggedInException $alreadyLoggedInException) {
             $this->app->redirectTo('home');
         }
-        if (!$login) {
-            $this->app->render('admin/login.html.twig', ['authError' => true]);
+        if ($login) {
+            $this->app->redirectTo('users_create');
         }
+
+        $this->app->render('admin/login.html.twig', ['authError' => true]);
     }
 }

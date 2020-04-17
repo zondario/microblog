@@ -8,9 +8,11 @@
 
 namespace App\Config;
 
+use App\Controller\Admin\UsersController;
 use App\Services\Security\AuthenticationManagerInterface;
 use App\Services\Security\AuthenticationTokenManager;
 use App\Services\Security\AuthenticationTokenManagerInterface;
+use App\Services\Security\PasswordManagerInterface;
 use Doctrine\ORM\EntityManager;
 
 class ContainerBuilder
@@ -54,6 +56,18 @@ class ContainerBuilder
         $app->container->singleton(\App\Controller\Admin\AuthenticationController::class, function ($container) use($app) {
             return new \App\Controller\Admin\AuthenticationController(
                 $container['entityManager'],
+                $container[AuthenticationManagerInterface::class]
+            );
+        });
+        $app->container->singleton(\App\Services\User\ManagerInterface::class, function ($container) use($app) {
+            return new \App\Services\User\Manager(
+                $container['entityManager'],
+                $container[PasswordManagerInterface::class]
+            );
+        });
+        $app->container->singleton(UsersController::class, function ($container) use($app) {
+            return new \App\Controller\Admin\UsersController(
+                $container[\App\Services\User\ManagerInterface::class],
                 $container[AuthenticationManagerInterface::class]
             );
         });

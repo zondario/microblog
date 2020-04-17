@@ -13,4 +13,10 @@ interface AuthenticationManagerInterface
     public function login($username, $password);
 
     public function isLoggedIn();
+
+    public function logOut();
+
+    public function getUser();
+
+    public function isAuthenticated();
 }

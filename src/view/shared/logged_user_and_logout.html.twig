@@ -1,0 +1,4 @@
+{% set user = authManager.getUser() %}
+{% if user is defined and user is not null %}
+    <p>You are logged in as <strong>{{ user.firstName }}:{{ user.username }}</strong><a href="{{ urlFor('logout') }}">Log out</a></p>
+{% endif %}

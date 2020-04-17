@@ -15,7 +15,7 @@ class AuthenticationTokenRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder("aut")
             ->where('aut.token = :token')
             ->andWhere('aut.user = :user')
-            ->andWhere('aut.createdAt < :now AND :now < aut.expires')
+            ->andWhere('aut.createdAt <= :now AND :now <= aut.expires')
             ->setParameter('user', $userId)
             ->setParameter('token', $token)
             ->setParameter('now', new \DateTime())

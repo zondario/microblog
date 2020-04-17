@@ -30,6 +30,10 @@ class AuthenticationManager implements AuthenticationManagerInterface
      * @var AuthenticationTokenManagerInterface
      */
     private $authenticationTokenManager;
+    /**
+     * @var User
+     */
+    private $user;
 
     public function __construct(
         EntityManager $entityManager,
@@ -54,6 +58,7 @@ class AuthenticationManager implements AuthenticationManagerInterface
         if ($this->passwordManager->isValid($password, $dbPassword)) {
             $this->doLogin($possibleUser);
         }
+        $this->user = $possibleUser;
         return true;
     }
 
@@ -78,9 +83,33 @@ class AuthenticationManager implements AuthenticationManagerInterface
         if ($dbToken) {
             return true;
         }
-        $this->session->delete(self::AUTHENTICATION_TOKEN_KEY);
+        $this->deleteSessionInfo();
         return false;
     }
 
 
+    public function logOut()
+    {
+       $this->deleteSessionInfo();
+    }
+
+    private function deleteSessionInfo()
+    {
+        $this->session->delete(self::AUTHENTICATION_TOKEN_KEY);
+        $this->session->delete('user_id');
+    }
+
+    public function getUser()
+    {
+        if ($this->isLoggedIn() && !$this->user && $userId = $this->session->get('user_id')) {
+            $repo = $this->entityManager->getRepository(User::class);
+            $user = $repo->findOneBy(['id' => $userId]);
+            $this->user = $user;
+        }
+        return $this->user;
+    }
+    public function isAuthenticated()
+    {
+        return $this->isLoggedIn();
+    }
 }

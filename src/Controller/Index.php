@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\Security\AuthenticationManagerInterface;
 use Doctrine\ORM\EntityManager;
 
 class Index extends BaseController
