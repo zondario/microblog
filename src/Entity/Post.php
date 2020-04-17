@@ -18,7 +18,7 @@ class Post
     protected $id;
 
     /**
-     * @ORM\Column(name="created_at", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 
