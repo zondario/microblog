@@ -1,0 +1,13 @@
+{% extends '/admin/base.html.twig' %}
+{% block title %}
+    Create Post
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/css/admin/login.css">
+{% endblock %}
+{% block main %}
+    {% if error is defined and error == true %}
+        <p class="error">{{ errorMessage }}</p>
+    {% endif %}
+    {% include 'admin/posts/post_form.html.twig' with {post: post} %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<div class="form-login">
+    <form {% if post is defined and post is not null %} action="{{ urlFor('post_edit', {id: post.id}) }}" {% endif %}method="post">
+        <div class="container">
+            {% if post is defined and post is not null %}
+                <p>Post was created from {{ post.author.username }} on {{ post.createdAt|date('Y-m-d H:i') }}</p>
+            {% endif %}
+            <label for="title"><b>Title</b></label>
+            <input {% if post is defined and post is not null %} value="{{ post.title }}" {% endif %} type="text" placeholder="Enter title" name="title" required>
+
+            <label for="content"><b>Content</b></label>
+            <textarea style="height: 200px; width: 100%;" placeholder="Enter content" name="content" required>{% spaceless %}
+                     {% if post is defined and post is not null %} {{ post.content }} {% endif %}
+            {% endspaceless %}</textarea>
+
+            <button type="submit">Submit</button>
+            {% if post is defined and post is not null %}
+                <a style="color:red;" href="{{ urlFor('posts_delete', {id: post.id}) }}"><button class="deletebtn"  type="button">Delete</button></a>
+            {% endif %}
+        </div>
+    </form>
+</div>

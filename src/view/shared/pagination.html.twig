@@ -1,0 +1,5 @@
+<div class="pagination">
+    {% for i in 1..pages %}
+        <a href="{{ urlFor(route, {page: i}) }}">{{ i }}</a>
+    {% endfor %}
+</div>

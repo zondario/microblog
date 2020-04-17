@@ -1,4 +1,10 @@
 {% set user = authManager.getUser() %}
+{% set matchedRoute = router.getCurrentRoute().getName() %}
 {% if user is defined and user is not null %}
-    <p>You are logged in as <strong>{{ user.firstName }}:{{ user.username }}</strong><a href="{{ urlFor('logout') }}">Log out</a></p>
+    <div class="topnav">
+        <a {% if matchedRoute == 'users_create' %} class="active" {% endif %}href="{{ urlFor('users_create') }}">User Create</a>
+        <a {% if matchedRoute == 'posts_admin_list' %} class="active" {% endif %} href="{{ urlFor('posts_admin_list') }}">Posts</a>
+        <a href="{{ urlFor('logout') }}">Log out</a>
+    </div>
+    <p>You are logged in as <strong>{{ user.firstName }}:{{ user.username }}</strong></p>
 {% endif %}

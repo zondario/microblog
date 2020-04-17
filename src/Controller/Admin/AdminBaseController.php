@@ -26,7 +26,7 @@ abstract class AdminBaseController extends BaseController
     protected function authenticate()
     {
         if (!$this->authenticationManager->isAuthenticated()) {
-            $this->app->halt(403);
+            $this->app->redirectTo('login');
         }
     }
 }

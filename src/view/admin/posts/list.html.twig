@@ -1,0 +1,21 @@
+{% extends '/admin/base.html.twig' %}
+{% block title %}
+    Post List
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/css/admin/form.css">
+{% endblock %}
+{% block main %}
+    {% if error is defined and error == true %}
+        <p class="error">{{ errorMessage }}</p>
+    {% endif %}
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post">
+                {% include 'admin/posts/post_form.html.twig' with {post: post} %}
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'shared/pagination.html.twig' with {pages: (posts.count/10)|round(0, 'ceil'), route: 'posts_admin_list'} %}
+{% endblock %}

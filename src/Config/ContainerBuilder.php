@@ -8,7 +8,9 @@
 
 namespace App\Config;
 
+use App\Controller\Admin\PostController;
 use App\Controller\Admin\UsersController;
+use App\Services\Post\ManagerInterface;
 use App\Services\Security\AuthenticationManagerInterface;
 use App\Services\Security\AuthenticationTokenManager;
 use App\Services\Security\AuthenticationTokenManagerInterface;
@@ -68,6 +70,17 @@ class ContainerBuilder
         $app->container->singleton(UsersController::class, function ($container) use($app) {
             return new \App\Controller\Admin\UsersController(
                 $container[\App\Services\User\ManagerInterface::class],
+                $container[AuthenticationManagerInterface::class]
+            );
+        });
+        $app->container->singleton(ManagerInterface::class, function ($container) use($app) {
+            return new \App\Services\Post\Manager(
+                $container['entityManager']
+            );
+        });
+        $app->container->singleton(PostController::class, function ($container) use($app) {
+            return new \App\Controller\Admin\PostController(
+                $container[\App\Services\Post\ManagerInterface::class],
                 $container[AuthenticationManagerInterface::class]
             );
         });
