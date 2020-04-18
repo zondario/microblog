@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Exceptions\Security\UserAlreadyExists;
 use App\Services\Security\AuthenticationManagerInterface;
 use App\Services\User\Manager;
 use App\Services\Validators\Request\UserCreate;
@@ -33,21 +34,31 @@ class UsersController extends AdminBaseController
             $this->app->render('admin/user_create.html.twig',
                 [
                     'error' => true,
-                    'message' => 'All fields are required'
+                    'errorMessage' => 'All fields are required'
                 ]
             );
         }
-        $user = $this->userManager->createNewUser(
-            $this->request->post('first_name'),
-            $this->request->post('last_name'),
-            $this->request->post('username'),
-            $this->request->post('password')
-        );
-        $this->app->render('admin/user_create.html.twig',
-            [
-                'error' => false,
-                'user' => $user
-            ]
-        );
+        try {
+            $user = $this->userManager->createNewUser(
+                $this->request->post('first_name'),
+                $this->request->post('last_name'),
+                $this->request->post('username'),
+                $this->request->post('password')
+            );
+            $this->app->render('admin/user_create.html.twig',
+                [
+                    'error' => false,
+                    'user' => $user
+                ]
+            );
+        } catch (UserAlreadyExists $exception) {
+            $this->app->render('admin/user_create.html.twig',
+                [
+                    'error' => true,
+                    'errorMessage' => 'User with this username already exists'
+                ]
+            );
+        }
+
     }
 }
