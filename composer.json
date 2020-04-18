@@ -19,7 +19,8 @@
         "twig/twig": "1.*",
         "doctrine/orm": "^2.7",
         "akrabat/rka-slim-controller": "^2.0",
-        "bryanjhv/slim-session": "~2.2"
+        "bryanjhv/slim-session": "~2.2",
+        "phpunit/phpunit": "^5.7"
     },
     "autoload": {
         "psr-4": {
