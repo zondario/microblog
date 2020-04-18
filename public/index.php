@@ -28,7 +28,7 @@ $app->add(new \Slim\Middleware\Session(array(
 $app->view->getEnvironment()->addGlobal('authManager', $app->container[\App\Services\Security\AuthenticationManagerInterface::class]);
 $app->view->getEnvironment()->addGlobal('router', $app->router);
 // Define routes
-$app->get('/', 'App\Controller\Index:execute')->name('home');
+$app->get('/(:page)', 'App\Controller\Index:execute')->name('home');
 $app->get('/admin/login', 'App\Controller\Admin\AuthenticationController:login')->name('login');
 $app->post('/admin/login', 'App\Controller\Admin\AuthenticationController:loginPost')->name('loginPost');
 $app->get('/admin/logout', 'App\Controller\Admin\AuthenticationController:logout')->name('logout');

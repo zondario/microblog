@@ -46,6 +46,7 @@ class PostController extends AdminBaseController
             $this->request->post('content'),
             $this->authenticationManager->getUser()
         );
+        $this->app->redirectTo('posts_admin_list');
     }
     public function listAll($page = 1)
     {

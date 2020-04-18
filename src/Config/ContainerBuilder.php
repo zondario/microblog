@@ -38,9 +38,6 @@ class ContainerBuilder
             $entityManager = \App\Config\DoctrineEntityManagerFactory::create();
             return $entityManager;
         });
-        $app->container->singleton(\App\Controller\Index::class, function ($container) use($app) {
-            return new \App\Controller\Index($container['entityManager']);
-        });
         $app->container->singleton(\App\Services\Security\PasswordManagerInterface::class, function () {
             return new \App\Services\Security\PasswordManager();
         });
@@ -83,6 +80,9 @@ class ContainerBuilder
                 $container[\App\Services\Post\ManagerInterface::class],
                 $container[AuthenticationManagerInterface::class]
             );
+        });
+        $app->container->singleton(\App\Controller\Index::class, function ($container) use($app) {
+            return new \App\Controller\Index($container[ManagerInterface::class]);
         });
 
     }

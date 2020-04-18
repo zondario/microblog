@@ -2,21 +2,26 @@
 
 namespace App\Controller;
 
+use App\Services\Post\ManagerInterface;
 use App\Services\Security\AuthenticationManagerInterface;
 use Doctrine\ORM\EntityManager;
 
 class Index extends BaseController
 {
-    private $entityManager;
+    /**
+     * @var ManagerInterface
+     */
+    private $postManager;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(ManagerInterface $postManager)
     {
-        $this->entityManager = $entityManager;
+        $this->postManager = $postManager;
     }
 
-    public function execute()
+    public function execute($page = 1)
     {
-        $this->app->render('index.html.twig', []);
+        $allPosts = $this->postManager->getPostsPagination($page, 10);
+        $this->app->render('index.html.twig', ['posts' => $allPosts]);
     }
 
 }
