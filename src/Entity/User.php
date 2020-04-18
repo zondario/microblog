@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exceptions\Security\InvalidArgumentSuppliedException;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,29 +19,34 @@ class User
     protected $id;
 
     /**
-     * @ORM\Column(name="first_name", type="string")
+     * @ORM\Column(name="first_name", type="string", nullable=false)
      */
     protected $firstName;
 
     /**
-     * @ORM\Column(name="last_name", type="string")
+     * @ORM\Column(name="last_name", type="string", nullable=false)
      */
     protected $lastName;
 
     /**
-     * @ORM\Column(name="username", type="string")
+     * @ORM\Column(name="username", type="string", nullable=false)
      */
     protected $username;
 
     /**
-     * @ORM\Column(name="password", type="string")
+     * @ORM\Column(name="password", type="string", nullable=false)
      */
     protected $password;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     protected $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AuthenticationToken", cascade={"remove"}, mappedBy="user", orphanRemoval=true)
+     */
+    protected $tokens;
 
     /**
      * @return mixed
@@ -63,6 +69,9 @@ class User
      */
     public function setFirstName($firstName)
     {
+        if (!$firstName) {
+            throw new InvalidArgumentSuppliedException('First name cannot be empty');
+        }
         $this->firstName = $firstName;
     }
 
@@ -79,6 +88,9 @@ class User
      */
     public function setLastName($lastName)
     {
+        if (!$lastName) {
+            throw new InvalidArgumentSuppliedException('Last name cannot be empty');
+        }
         $this->lastName = $lastName;
     }
 
@@ -95,6 +107,9 @@ class User
      */
     public function setUsername($username)
     {
+        if (!$username) {
+            throw new InvalidArgumentSuppliedException('Username cannot be empty');
+        }
         $this->username = $username;
     }
 
@@ -111,6 +126,9 @@ class User
      */
     public function setPassword($password)
     {
+        if (!$password) {
+            throw new InvalidArgumentSuppliedException('Password cannot be empty');
+        }
         $this->password = $password;
     }
 
@@ -127,6 +145,9 @@ class User
      */
     public function setCreatedAt($createdAt)
     {
+        if (!$createdAt) {
+            throw new InvalidArgumentSuppliedException('CreatedAt cannot be empty');
+        }
         $this->createdAt = $createdAt;
     }
 }

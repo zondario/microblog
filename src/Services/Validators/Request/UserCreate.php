@@ -15,9 +15,11 @@ class UserCreate
 {
     public static function isValid(Request $request)
     {
+
         if (!$request->post('username') ||
             !$request->post('password') ||
-            !$request->post('first_name')
+            !$request->post('first_name') ||
+            !$request->post('last_name')
         ) {
             return false;
         }

@@ -5,6 +5,7 @@ namespace App\Services\Post;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Exceptions\Security\InvalidArgumentSuppliedException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -22,7 +23,7 @@ class Manager implements ManagerInterface
     }
 
 
-    public function createNewPost($title, $content, User $author)
+    public function createNewPost($title, $content, User $author = null)
     {
         $post = new Post();
         $post->setCreatedAt(new \DateTime());
@@ -52,6 +53,7 @@ class Manager implements ManagerInterface
         $post = $this->entityManager->getReference(Post::class, $id);
         $post->setTitle($title);
         $post->setContent($content);
+        $this->entityManager->persist($post);
         $this->entityManager->flush();
     }
 }

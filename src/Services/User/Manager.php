@@ -10,7 +10,7 @@ namespace App\Services\User;
 
 
 use App\Entity\User;
-use App\Exceptions\Security\UserAlreadyExists;
+use App\Exceptions\Security\UserAlreadyExistsException;
 use App\Services\Security\PasswordManagerInterface;
 use Doctrine\ORM\EntityManager;
 
@@ -36,7 +36,7 @@ class Manager implements ManagerInterface
         $repo = $this->entityManager->getRepository(User::class);
         $possibleUserWithSameUsername = $repo->findBy(['username' => $username]);
         if ($possibleUserWithSameUsername) {
-            throw new UserAlreadyExists();
+            throw new UserAlreadyExistsException();
         }
         $user = new User();
         $user->setFirstName($firstName);

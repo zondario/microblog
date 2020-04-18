@@ -19,6 +19,7 @@ class AuthenticationToken
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(onDelete="cascade")
      */
     protected $user;
 

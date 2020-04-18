@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Exceptions\Security\UserAlreadyExists;
+use App\Exceptions\Security\UserAlreadyExistsException;
 use App\Services\Security\AuthenticationManagerInterface;
 use App\Services\User\Manager;
 use App\Services\Validators\Request\UserCreate;
@@ -51,7 +51,7 @@ class UsersController extends AdminBaseController
                     'user' => $user
                 ]
             );
-        } catch (UserAlreadyExists $exception) {
+        } catch (UserAlreadyExistsException $exception) {
             $this->app->render('admin/user_create.html.twig',
                 [
                     'error' => true,

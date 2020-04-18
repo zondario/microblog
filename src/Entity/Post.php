@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exceptions\Security\InvalidArgumentSuppliedException;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,12 +19,12 @@ class Post
     protected $id;
 
     /**
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     protected $title;
 
     /**
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="content", type="text", nullable=false)
      */
     protected $content;
 
@@ -33,7 +34,7 @@ class Post
     protected $author;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
     protected $createdAt;
 
@@ -50,6 +51,9 @@ class Post
      */
     public function setTitle($title)
     {
+        if (!$title) {
+            throw new InvalidArgumentSuppliedException('Title cannot be empty');
+        }
         $this->title = $title;
     }
 
@@ -66,6 +70,9 @@ class Post
      */
     public function setContent($content)
     {
+        if (!$content) {
+            throw new InvalidArgumentSuppliedException('Content cannot be empty');
+        }
         $this->content = $content;
     }
 

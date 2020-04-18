@@ -12,7 +12,7 @@ use App\Entity\User;
 
 interface ManagerInterface
 {
-    public function createNewPost($title, $content, User $author);
+    public function createNewPost($title, $content, User $author = null);
 
     public function getPostsPagination($page, $perPage);
 
