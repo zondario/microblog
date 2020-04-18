@@ -20,14 +20,7 @@ class DoctrineEntityManagerFactory
         //$config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), $isDevMode);
 
         // database configuration parameters
-        $conn = [
-            'driver'   => 'pdo_mysql',
-            'host'     => 'localhost',
-            'port'     => 3306,
-            'dbname'   => 'microblog',
-            'user'     => 'root',
-            'password' => '',
-        ];
+        $conn = require __DIR__.'/../../config/doctrine.php';
 
         // obtaining the entity manager
         $entityManager = EntityManager::create($conn, $config);
